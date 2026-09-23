@@ -1,5 +1,9 @@
 package parasol;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -106,6 +110,35 @@ public class Menu {
 			System.out.println("Menu " + nbPerson + ": " + menu);
 		}
 		sc.close();
+		
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(new File("order.txt"));
+			int nbMenu = 1;
+			
+			for (ArrayList<String> menu : allMenu) {
+				String header = "*******************Résumé de la commande n°" + nbMenu + " *******************\n";
+				fos.write(header.getBytes());
+				
+				for (String choice: menu) {
+					fos.write(choice.getBytes());
+					fos.write("\n".getBytes());
+				}
+				fos.write("\n\n".getBytes());
+				nbMenu++;
+			}
+			
+		} catch (FileNotFoundException e) {
+			
+		} catch (IOException e) {
+			
+		}finally {
+			try {
+				if (fos != null) fos.close();
+			} catch (IOException e) {
+				
+			}
+		}
 	}
 
 }
