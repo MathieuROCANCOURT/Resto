@@ -41,38 +41,43 @@ public class Main {
 		}
 
 		Menu menuCard = new Menu();
+		List<UserCommand> listUsersCommands = new ArrayList<UserCommand>();
 		
-		ArrayList<List<MenuOption>> allMenu = new ArrayList<List<MenuOption>>();
 		for (int person = 1; person <= nbCustomer; person++) {
 			System.out.println("Commande numéro " + person);
-			List<MenuOption> menu = menuCard.defineMenu();
+			UserCommand userCommand = menuCard.defineMenu();
 			System.out.println("Résumé de la commande " + person);
-			System.out.println(menu + "\n");
-			allMenu.add(menu);
+			System.out.println(userCommand + "\n");
+			listUsersCommands.add(userCommand);
 		}
 
 		System.out.println("----------------Voici le récapitulatifs des menus-----------------");
-		int nbPerson = 0;
-		for (List<MenuOption> menu : allMenu) {
-			nbPerson += 1;
-			System.out.println("Menu " + nbPerson + ": " + menu);
+		for (UserCommand userCommand : listUsersCommands) {
+			System.out.println(userCommand);
 		}
 		sc.close();
 		
 		try (FileOutputStream fos = new FileOutputStream(new File("order.txt"))) {
 			int nbMenu = 1;
+			float totalCommands = 0.f;
 			
-			for (List<MenuOption> menu : allMenu) {
+			for (UserCommand uc : listUsersCommands) {
 				String header = "*******************Résumé de la commande n°" + nbMenu + " *******************\n";
 				fos.write(header.getBytes());
 				
-				for (MenuOption choice: menu) {
-					fos.write(choice.getOption().getBytes());
-					fos.write("\n".getBytes());
+				for (MenuOption choice: uc.getMenuUser()) {
+					String lineChoice = choice.getOption().toLowerCase() + "\t" + choice.getPrice() + "\n";
+					fos.write(lineChoice.getBytes());
 				}
-				fos.write("\n\n".getBytes());
+				totalCommands += uc.getTotalCommand();
+				String totalPrice = "Prix total: " + uc.getTotalCommand() + "€.\n\n";
+				fos.write(totalPrice.getBytes());
 				nbMenu++;
-			}			
+			}
+			
+			String strTotalCommands = "Prix total des commandes: " + totalCommands + "€.";
+			fos.write(strTotalCommands.getBytes());
+			
 		} catch (SecurityException | IOException e) {
 			Logger logger = Logger.getAnonymousLogger();
 			logger.log(Level.SEVERE, e.getLocalizedMessage());
