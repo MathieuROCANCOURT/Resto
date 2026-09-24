@@ -4,7 +4,6 @@
 package parasol;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,9 +59,7 @@ public class Main {
 		}
 		sc.close();
 		
-		FileOutputStream fos = null;
-		try {
-			fos = new FileOutputStream(new File("order.txt"));
+		try (FileOutputStream fos = new FileOutputStream(new File("order.txt"))) {
 			int nbMenu = 1;
 			
 			for (List<MenuOption> menu : allMenu) {
@@ -75,21 +72,10 @@ public class Main {
 				}
 				fos.write("\n\n".getBytes());
 				nbMenu++;
-			}
-			
-		} catch (FileNotFoundException e) {
+			}			
+		} catch (SecurityException | IOException e) {
 			Logger logger = Logger.getAnonymousLogger();
 			logger.log(Level.SEVERE, e.getLocalizedMessage());
-		} catch (IOException e) {
-			Logger logger = Logger.getAnonymousLogger();
-			logger.log(Level.SEVERE, e.getLocalizedMessage());
-		}finally {
-			try {
-				if (fos != null) fos.close();
-			} catch (IOException e) {
-				Logger logger = Logger.getAnonymousLogger();
-				logger.log(Level.SEVERE, e.getLocalizedMessage());
-			}
 		}
 	}
 }
