@@ -1,7 +1,5 @@
 package parasol;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -26,7 +24,7 @@ public class Menu {
 	private Dessert[] dessert = { new Dessert("TARTE NORMANDE", 3.5f), new Dessert("MOUSSE AU CHOCOLAT", 4.5f),
 			new Dessert("TIRAMISU", 4.95f), new Dessert(nothing, 0) };
 
-	private MenuOption[][] allMenu = { appetizer, mainCourse, sideDish, drink, dessert }; 
+	private MenuOption[][] allMenu = { appetizer, mainCourse, sideDish, drink, dessert };
 
 	/**
 	 * Checks whether the value entered by the user is an integer between 1 and the
@@ -46,9 +44,9 @@ public class Menu {
 		return 0 < choiceUser && choiceUser <= sizeArray;
 	}
 
-	public List<MenuOption> defineMenu() {
+	public UserCommand defineMenu() {
 		Scanner sc = new Scanner(System.in);
-		List<MenuOption> menuUser = new ArrayList<MenuOption>();
+		UserCommand userCommand = new UserCommand();
 
 		for (int step = 0; step < stepsCommand.length; step++) {
 			System.out.println("choix " + stepsCommand[step] + " :");
@@ -66,13 +64,9 @@ public class Menu {
 				inputUser = sc.nextLine();
 			}
 
-			int choiceUser = Integer.parseInt(inputUser);
-
-			if (choiceUser != this.allMenu[step].length) {
-				menuUser.add(this.allMenu[step][Integer.parseInt(inputUser) - 1]);
-			}
+			userCommand.addMenuOption(this.allMenu[step][Integer.parseInt(inputUser) - 1]);
 		}
 
-		return menuUser;
+		return userCommand;
 	}
 }
