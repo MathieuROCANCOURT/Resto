@@ -1,10 +1,7 @@
 package parasol;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,6 +11,23 @@ import java.util.Scanner;
  */
 
 public class Menu {
+	private static final String[] stepsCommand = { "entrée", "plat", "accompagnement", "boisson", "dessert" };
+
+	String nothing = "AUCUN";
+	private Appetizer[] appetizer = { new Appetizer("SALADE", 7.86f), new Appetizer("SOUPE", 5.64f),
+			new Appetizer("QUICHE", 9.45f), new Appetizer(nothing + 'E', 0) };
+	private MainCourse[] mainCourse = { new MainCourse("POULET", 5.6f), new MainCourse("BOEUF", 7.92f),
+			new MainCourse("POISSON", 9.99f), new MainCourse("VÉGÉTARIEN", 6.50f), new MainCourse("VEGAN", 8.23f),
+			new MainCourse(nothing, 0) };
+	private SideDish[] sideDish = { new SideDish("RIZ", 2f), new SideDish("PÂTES", 1.5f), new SideDish("FRITES", 3.67f),
+			new SideDish("LÉGUMES", 0.99f), new SideDish(nothing, 0) };
+	private Drink[] drink = { new Drink("EAU PLATE", 1), new Drink("EAU GAZEUSE", 1.25f), new Drink("SODA", 2),
+			new Drink("VIN", 4.5f), new Drink(nothing, 0) };
+	private Dessert[] dessert = { new Dessert("TARTE NORMANDE", 3.5f), new Dessert("MOUSSE AU CHOCOLAT", 4.5f),
+			new Dessert("TIRAMISU", 4.95f), new Dessert(nothing, 0) };
+
+	private MenuOption[][] allMenu = { appetizer, mainCourse, sideDish, drink, dessert }; 
+
 	/**
 	 * Checks whether the value entered by the user is an integer between 1 and the
 	 * number of options.
@@ -32,113 +46,33 @@ public class Menu {
 		return 0 < choiceUser && choiceUser <= sizeArray;
 	}
 
-	public static ArrayList<String> defineMenu() {
-		String nothing = "AUCUN";
-		String[] stepsCommand = { "entrée", "plat", "accompagnement", "boisson", "dessert" };
-		String[] appetizers = { "SALADE", "SOUPE", "QUICHE", nothing + 'E' };
-		String[] mainCourse = { "POULET", "BOEUF", "POISSON", "VÉGÉTARIEN", "VEGAN", nothing };
-		String[] sideDish = { "RIZ", "PÂTES", "FRITES", "LÉGUMES", nothing };
-		String[] drink = { "EAU PLATE", "EAU GAZEUSE", "SODA", "VIN", nothing };
-		String[] dessert = { "TARTE NORMANDE", "MOUSSE AU CHOCOLAT", "TIRAMISU", nothing };
-
-		String[][] menu = { appetizers, mainCourse, sideDish, drink, dessert };
+	public List<MenuOption> defineMenu() {
 		Scanner sc = new Scanner(System.in);
-		ArrayList<String> menuUser = new ArrayList<String>();
+		List<MenuOption> menuUser = new ArrayList<MenuOption>();
 
 		for (int step = 0; step < stepsCommand.length; step++) {
 			System.out.println("choix " + stepsCommand[step] + " :");
 
-			for (int index = 0; index < menu[step].length; index++) {
-				System.out.print("[" + (index + 1) + " - " + menu[step][index] + "]");
+			for (int index = 0; index < this.allMenu[step].length; index++) {
+				System.out.print("[" + (index + 1) + " - " + this.allMenu[step][index] + "]");
 			}
 
 			System.out.println(
 					"\nQue souhaitez-vous comme " + stepsCommand[step] + " ? [saisir le chiffre correspondant]");
 
 			String inputUser = sc.nextLine();
-			while (!validCommandUser(inputUser, menu[step].length)) {
-				System.out.println("Veuillez saisir une valeur entre 1 et " + menu[step].length + ".");
+			while (!validCommandUser(inputUser, this.allMenu[step].length)) {
+				System.out.println("Veuillez saisir une valeur entre 1 et " + this.allMenu[step].length + ".");
 				inputUser = sc.nextLine();
 			}
 
 			int choiceUser = Integer.parseInt(inputUser);
 
-			if (choiceUser != menu[step].length) {
-				menuUser.add(menu[step][Integer.parseInt(inputUser) - 1].toLowerCase());
+			if (choiceUser != this.allMenu[step].length) {
+				menuUser.add(this.allMenu[step][Integer.parseInt(inputUser) - 1]);
 			}
 		}
 
 		return menuUser;
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		boolean isNumberAndPos = false;
-		int nbCustomer = 0;
-
-		while (!isNumberAndPos) {
-			System.out.print("Bonjour ! Combien de manu(s) souhaitez-vous ?");
-			if (sc.hasNextInt()) {
-				nbCustomer = sc.nextInt();
-				if (nbCustomer > 0) {
-					isNumberAndPos = true;
-				} else {
-					System.err.println("La valeur doit être positif");
-
-				}
-			} else {
-				System.err.println("La valeur a saisir doit être un entier positif.");
-			}
-		}
-
-		ArrayList<ArrayList<String>> allMenu = new ArrayList<ArrayList<String>>();
-		for (int person = 1; person <= nbCustomer; person++) {
-			System.out.println("Commande numéro " + person);
-			ArrayList<String> menu = defineMenu();
-			System.out.println("Résumé de la commande " + person);
-			System.out.println(menu + "\n");
-			allMenu.add(menu);
-		}
-
-		System.out.println("----------------Voici le récapitulatifs des menus-----------------");
-		int nbPerson = 0;
-		for (ArrayList<String> menu : allMenu) {
-			nbPerson += 1;
-			System.out.println("Menu " + nbPerson + ": " + menu);
-		}
-		sc.close();
-		
-		FileOutputStream fos = null;
-		try {
-			fos = new FileOutputStream(new File("order.txt"));
-			int nbMenu = 1;
-			
-			for (ArrayList<String> menu : allMenu) {
-				String header = "*******************Résumé de la commande n°" + nbMenu + " *******************\n";
-				fos.write(header.getBytes());
-				
-				for (String choice: menu) {
-					fos.write(choice.getBytes());
-					fos.write("\n".getBytes());
-				}
-				fos.write("\n\n".getBytes());
-				nbMenu++;
-			}
-			
-		} catch (FileNotFoundException e) {
-			
-		} catch (IOException e) {
-			
-		}finally {
-			try {
-				if (fos != null) fos.close();
-			} catch (IOException e) {
-				
-			}
-		}
-	}
-
 }
