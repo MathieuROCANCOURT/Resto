@@ -30,8 +30,8 @@ public class MenuOption {
 
 	@Override
 	public String toString() {
-		if(option.startsWith("aucun")) {
-			return "";
+		if(option.startsWith("AUCUN")) {
+			return option;
 		}
 		return option + ", prix=" + price + "€";
 	}
