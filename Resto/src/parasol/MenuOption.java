@@ -6,7 +6,7 @@ package parasol;
 /**
  * 
  */
-protected class MenuOption {
+public class MenuOption {
 	private String option;
 	private float price;
 	
@@ -14,10 +14,8 @@ protected class MenuOption {
 	 * @param option
 	 * @param price
 	 */
-	public MenuOption(String option, float price) {
+	protected MenuOption(String option, float price) {
 		this.option = option;
 		this.price = price;
 	}
-	
-	
 }
