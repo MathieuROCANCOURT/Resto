@@ -6,17 +6,13 @@ package parasol;
 /**
  * 
  */
-public class Appetizer {
-	private String appetizer;
-	private float price;
-	
+public class Appetizer extends MenuOption {	
 	/**
 	 * @param appetizer
 	 * @param price
 	 */
 	public Appetizer(String appetizer, float price) {
-		this.appetizer = appetizer;
-		this.price = price;
+		super(appetizer, price);
 	}
 	
 	
