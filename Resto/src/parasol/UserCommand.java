@@ -10,9 +10,18 @@ import java.util.List;
  * 
  */
 public class UserCommand {
+	private static int nbCommand = 0;
 	private List<MenuOption> menuUser = new ArrayList<MenuOption>();
 	private float totalCommand = 0f;
 	
+	public UserCommand() {
+		nbCommand++;
+	}
+	
+	public int getNbCommand() {
+		return nbCommand;
+	}
+
 	public List<MenuOption> getMenuUser() {
 		return menuUser;
 	}
