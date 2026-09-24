@@ -54,7 +54,7 @@ public class Menu {
 			System.out.println("choix " + stepsCommand[step] + " :");
 
 			for (int index = 0; index < this.allMenu[step].length; index++) {
-				System.out.print("[" + (index + 1) + " - " + this.allMenu[step][index] + "]");
+				System.out.println("[" + (index + 1) + "] " + this.allMenu[step][index]);
 			}
 
 			System.out.println(
