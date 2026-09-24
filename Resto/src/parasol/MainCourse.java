@@ -8,10 +8,10 @@ package parasol;
  */
 public class MainCourse extends MenuOption {
 	/**
-	 * @param option
+	 * @param mainCourse
 	 * @param price
 	 */
-	public MainCourse(String option, float price) {
-		super(option, price);
+	public MainCourse(String mainCourse, float price) {
+		super(mainCourse, price);
 	}
 }
