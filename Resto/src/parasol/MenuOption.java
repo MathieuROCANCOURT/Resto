@@ -18,4 +18,21 @@ public class MenuOption {
 		this.option = option;
 		this.price = price;
 	}
+
+	public String getOption() {
+		return option;
+	}
+
+
+	public float getPrice() {
+		return price;
+	}
+
+	@Override
+	public String toString() {
+		if(option.startsWith("aucun")) {
+			return "";
+		}
+		return option + ", prix=" + price + "€";
+	}
 }
