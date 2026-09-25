@@ -4,7 +4,7 @@
 package parasol;
 
 /**
- * The class can implemented all choices in the menu with price associated.
+ * The class can implemented all choices in the menu with associated price.
  * 
  * @author RocancourtM
  */
