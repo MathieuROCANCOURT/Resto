@@ -4,7 +4,9 @@
 package parasol;
 
 /**
+ * The class can implemented a main course choice in the menu with associated price.
  * 
+ * @author RocancourtM
  */
 public class MainCourse extends MenuOption {
 	/**
