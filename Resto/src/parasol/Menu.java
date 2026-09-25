@@ -44,8 +44,7 @@ public class Menu {
 		return 0 < choiceUser && choiceUser <= sizeArray;
 	}
 
-	public UserCommand defineMenu() {
-		Scanner sc = new Scanner(System.in);
+	public UserCommand defineMenu(Scanner sc) {
 		UserCommand userCommand = new UserCommand();
 
 		for (int step = 0; step < stepsCommand.length; step++) {

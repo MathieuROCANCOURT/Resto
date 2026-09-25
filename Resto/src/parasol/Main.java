@@ -45,7 +45,7 @@ public class Main {
 		
 		for (int person = 1; person <= nbCustomer; person++) {
 			System.out.println("Commande numéro " + person);
-			UserCommand userCommand = menuCard.defineMenu();
+			UserCommand userCommand = menuCard.defineMenu(sc);
 			System.out.println("Résumé de la commande " + person);
 			System.out.println(userCommand + "\n");
 			listUsersCommands.add(userCommand);
