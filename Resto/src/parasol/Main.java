@@ -13,7 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Main application for ordering at a restaurant.
  * 
+ * @author RocancourtM
  */
 public class Main {
 
