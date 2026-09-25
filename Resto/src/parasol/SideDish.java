@@ -4,7 +4,9 @@
 package parasol;
 
 /**
+ * The class can implemented a side dish choice in the menu with associated price.
  * 
+ * @author RocancourtM
  */
 public class SideDish extends MenuOption {
 	/**
