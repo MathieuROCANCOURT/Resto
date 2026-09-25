@@ -20,7 +20,7 @@ public class Main {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SecurityException, IOException {
 		Scanner sc = new Scanner(System.in);
 		boolean isNumberAndPos = false;
 		int nbCustomer = 0;
