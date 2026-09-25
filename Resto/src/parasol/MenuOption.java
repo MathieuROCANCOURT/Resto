@@ -4,7 +4,9 @@
 package parasol;
 
 /**
+ * The class can implemented all choices in the menu with price associated.
  * 
+ * @author RocancourtM
  */
 public class MenuOption {
 	private String option;
