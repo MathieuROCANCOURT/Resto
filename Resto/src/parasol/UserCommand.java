@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Create an user command associated by an unique id with a menu and the total
+ * price of the command.
  * 
+ * @author RocancourtM
  */
 public class UserCommand {
 	private static int counter = 0;
